@@ -1,0 +1,114 @@
+-- =========================
+-- CORE TABLES
+-- =========================
+
+CREATE TABLE firearm_type (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    type VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE fire_mode (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    mode VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE brand (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    brand VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE ammo (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    calibre VARCHAR(50),
+    type VARCHAR(50)
+);
+
+CREATE TABLE manufacturer (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    img_path TEXT
+);
+
+CREATE TABLE attachment (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(50),
+    img_path TEXT
+);
+
+CREATE TABLE picture (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    img_path TEXT NOT NULL
+);
+
+CREATE TABLE firearm (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    rate_of_fire FLOAT,
+    capacity INT,
+    effective_range FLOAT,
+    barrel_length FLOAT,
+    weight FLOAT,
+    firearm_type_id INT,
+
+    FOREIGN KEY (firearm_type_id) REFERENCES firearm_type(id)
+);
+
+-- =========================
+-- RELATION TABLES
+-- =========================
+
+-- FIREARM ↔ FIRE_MODE
+CREATE TABLE firearm_fire_mode (
+    firearm_id INT,
+    fire_mode_id INT,
+    PRIMARY KEY (firearm_id, fire_mode_id),
+    FOREIGN KEY (firearm_id) REFERENCES firearm(id) ON DELETE CASCADE,
+    FOREIGN KEY (fire_mode_id) REFERENCES fire_mode(id) ON DELETE CASCADE
+);
+
+-- FIREARM ↔ AMMO
+CREATE TABLE firearm_ammo (
+    firearm_id INT,
+    ammo_id INT,
+    PRIMARY KEY (firearm_id, ammo_id),
+    FOREIGN KEY (firearm_id) REFERENCES firearm(id) ON DELETE CASCADE,
+    FOREIGN KEY (ammo_id) REFERENCES ammo(id) ON DELETE CASCADE
+);
+
+-- AMMO ↔ BRAND
+CREATE TABLE ammo_brand (
+    ammo_id INT,
+    brand_id INT,
+    PRIMARY KEY (ammo_id, brand_id),
+    FOREIGN KEY (ammo_id) REFERENCES ammo(id) ON DELETE CASCADE,
+    FOREIGN KEY (brand_id) REFERENCES brand(id) ON DELETE CASCADE
+);
+
+-- FIREARM ↔ ATTACHMENT
+CREATE TABLE firearm_attachment (
+    firearm_id INT,
+    attachment_id INT,
+    PRIMARY KEY (firearm_id, attachment_id),
+    FOREIGN KEY (firearm_id) REFERENCES firearm(id) ON DELETE CASCADE,
+    FOREIGN KEY (attachment_id) REFERENCES attachment(id) ON DELETE CASCADE
+);
+
+-- FIREARM ↔ MANUFACTURER
+CREATE TABLE firearm_manufacturer (
+    firearm_id INT,
+    manufacturer_id INT,
+    PRIMARY KEY (firearm_id, manufacturer_id),
+    FOREIGN KEY (firearm_id) REFERENCES firearm(id) ON DELETE CASCADE,
+    FOREIGN KEY (manufacturer_id) REFERENCES manufacturer(id) ON DELETE CASCADE
+);
+
+-- FIREARM → PICTURE (1:N)
+CREATE TABLE firearm_picture (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    firearm_id INT NOT NULL,
+    picture_id INT NOT NULL,
+
+    FOREIGN KEY (firearm_id) REFERENCES firearm(id) ON DELETE CASCADE,
+    FOREIGN KEY (picture_id) REFERENCES picture(id) ON DELETE CASCADE
+);

@@ -1,0 +1,44 @@
+services:
+
+  app:
+    build: .
+    container_name: wikign_app
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_USER: wikign
+      DB_PASS: wikign_pass
+      DB_NAME: wikign
+    volumes:
+      # Live-reload: local files overwrite container files during development
+      - .:/var/www/html
+      # Persist uploaded images separately so they survive code reloads
+      - images_data:/var/www/html/assets/images
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    container_name: wikign_db
+    environment:
+      MYSQL_DATABASE: wikign
+      MYSQL_USER: wikign
+      MYSQL_PASSWORD: wikign_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "wikign", "-pwikign_pass"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+
+volumes:
+  db_data:
+  images_data:
