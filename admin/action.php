@@ -35,27 +35,6 @@ match ($entity) {
 // ── Helpers ───────────────────────────────────────────────────────
 
 /**
- * Move an uploaded image to assets/images/ and return its relative path.
- * Returns null if no file was uploaded or the file is invalid.
- */
-function handle_upload(string $field): ?string {
-    if (!isset($_FILES[$field]) || $_FILES[$field]['error'] !== UPLOAD_ERR_OK) {
-        return null;
-    }
-    $allowed_ext = ['jpg','jpeg','png','gif','webp'];
-    $ext = strtolower(pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, $allowed_ext, true)) {
-        return null;
-    }
-    $filename = uniqid('img_', true) . '.' . $ext;
-    $dest = __DIR__ . '/../assets/images/' . $filename;
-    if (!move_uploaded_file($_FILES[$field]['tmp_name'], $dest)) {
-        return null;
-    }
-    return 'assets/images/' . $filename;
-}
-
-/**
  * Handle multiple uploaded images from a multi-file input (name="field[]").
  * Returns an array of saved relative paths (may be empty).
  */

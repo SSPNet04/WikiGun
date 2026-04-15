@@ -25,13 +25,7 @@ $result = $conn->query("
     <?php while ($m = $result->fetch_assoc()): ?>
     <div class="col">
         <div class="card h-100 text-center p-3 firearm-card">
-            <?php if ($m['img_path'] && file_exists($m['img_path'])): ?>
-                <img src="<?= htmlspecialchars($m['img_path']) ?>"
-                     class="mx-auto mb-3" style="height:80px;object-fit:contain;"
-                     alt="<?= htmlspecialchars($m['name']) ?>">
-            <?php else: ?>
-                <i class="bi bi-building fs-1 text-secondary mb-3"></i>
-            <?php endif; ?>
+            <?= img_or_icon($m['img_path'], 'building', $m['name'], 'height:80px;object-fit:contain;') ?>
             <h5 class="card-title mb-1"><?= htmlspecialchars($m['name']) ?></h5>
             <p class="text-muted small mb-3"><?= $m['firearm_count'] ?> firearm<?= $m['firearm_count'] !== 1 ? 's' : '' ?></p>
             <a href="index.php?mfr=<?= $m['id'] ?>" class="btn btn-sm btn-outline-danger">

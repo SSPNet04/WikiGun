@@ -62,13 +62,7 @@ $result = $stmt->get_result();
     <?php while ($att = $result->fetch_assoc()): ?>
     <div class="col">
         <div class="card h-100 text-center p-3 firearm-card">
-            <?php if ($att['img_path'] && file_exists($att['img_path'])): ?>
-                <img src="<?= htmlspecialchars($att['img_path']) ?>"
-                     class="mx-auto mb-2" style="height:70px;object-fit:contain;"
-                     alt="<?= htmlspecialchars($att['name']) ?>">
-            <?php else: ?>
-                <i class="bi bi-tools fs-2 text-secondary mb-2"></i>
-            <?php endif; ?>
+            <?= img_or_icon($att['img_path'], 'tools', $att['name'], 'height:70px;object-fit:contain;') ?>
             <span class="badge bg-secondary mb-1"><?= htmlspecialchars($att['type']) ?></span>
             <h6 class="mb-1"><?= htmlspecialchars($att['name']) ?></h6>
             <?php if ($att['firearms']): ?>
