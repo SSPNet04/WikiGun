@@ -261,18 +261,25 @@ function handle_firearm_picture(mysqli $conn, string $action, int $id): never {
     $firearm_id = (int)($_POST['firearm_id'] ?? 0);
     if ($action === 'delete' && $id > 0) {
         // Get the picture path before deleting so we can remove the file
-        $s = $conn->prepare("SELECT p.img_path FROM picture p JOIN firearm_picture fp ON p.id=fp.picture_id WHERE fp.id=?");
+        $s = $conn->prepare("SELECT p.id, p.img_path FROM picture p JOIN firearm_picture fp ON p.id=fp.picture_id WHERE fp.id=?");
         $s->bind_param('i', $id);
         $s->execute();
         $res = $s->get_result();
         $pic = $res->fetch_assoc();
         $res->free(); $s->close();
 
-        // Delete the firearm_picture row (picture row deleted by cascade if unused)
+        // Delete the firearm_picture subclass row first, then the picture superclass row
         $d = $conn->prepare("DELETE FROM firearm_picture WHERE id=?");
         $d->bind_param('i', $id);
         $d->execute();
         $d->close();
+
+        if ($pic && $pic['id']) {
+            $dp = $conn->prepare("DELETE FROM picture WHERE id=?");
+            $dp->bind_param('i', $pic['id']);
+            $dp->execute();
+            $dp->close();
+        }
 
         // Remove physical file if it exists
         if ($pic && $pic['img_path']) {
