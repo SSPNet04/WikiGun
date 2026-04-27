@@ -58,6 +58,18 @@ function handle_uploads(string $field): array {
     return $paths;
 }
 
+function handle_upload(string $field): ?string {
+    if (!isset($_FILES[$field]) || $_FILES[$field]['error'] !== UPLOAD_ERR_OK) return null;
+    $allowed_ext = ['jpg','jpeg','png','gif','webp'];
+    $ext = strtolower(pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION));
+    if (!in_array($ext, $allowed_ext, true)) return null;
+    $filename = uniqid('img_', true) . '.' . $ext;
+    $dest = __DIR__ . '/../assets/images/' . $filename;
+    return move_uploaded_file($_FILES[$field]['tmp_name'], $dest)
+        ? 'assets/images/' . $filename
+        : null;
+}
+
 function redirect(string $tab, string $extra = ''): never {
     header("Location: index.php?tab={$tab}{$extra}");
     exit;
