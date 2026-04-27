@@ -38,6 +38,17 @@ services:
       retries: 10
     restart: unless-stopped
 
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: wikign_pma
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: wikign
+      PMA_PASSWORD: wikign_pass
+    depends_on:
+      - db
 
 volumes:
   db_data:
