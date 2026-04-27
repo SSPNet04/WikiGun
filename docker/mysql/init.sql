@@ -134,39 +134,36 @@ INSERT INTO ammo (calibre, type) VALUES
 ('.50 AE',       'JHP');
 
 INSERT INTO manufacturer (name, img_path) VALUES
-('Glock',                'assets/images/mfr_glock.jpg'),
-('Colt',                 'assets/images/mfr_colt.jpg'),
-('Heckler & Koch',       'assets/images/mfr_hk.jpg'),
-('Smith & Wesson',       'assets/images/mfr_sw.jpg'),
-('Kalashnikov Concern',  'assets/images/mfr_ak.jpg'),
-('FN Herstal',           'assets/images/mfr_fn.jpg'),
-('Remington',            'assets/images/mfr_remington.jpg'),
-('IMI / Magnum Research','assets/images/mfr_imi.jpg');
+('Glock',                'assets/images/Glock.png'),
+('Colt',                 'assets/images/Colt_logo.png'),
+('Heckler & Koch',       'assets/images/HK_Logo.svg.png'),
+('Smith & Wesson',       'assets/images/Smith & Wesson.png'),
+('Kalashnikov Concern',  'assets/images/Kalashnikov Concern.png'),
+('FN Herstal',           'assets/images/FN_Logo.png'),
+('Remington',            'assets/images/Remingtonlogo.svg.png'),
+('IMI / Magnum Research','assets/images/Magnum Research.png');
 
 INSERT INTO attachment (name, type, img_path) VALUES
-('ACOG 4x Scope',    'Scope',      'assets/images/att_acog.jpg'),
-('Red Dot Sight',    'Scope',      'assets/images/att_rds.jpg'),
-('Suppressor 9mm',   'Suppressor', 'assets/images/att_sup9mm.jpg'),
-('Suppressor .308',  'Suppressor', 'assets/images/att_sup308.jpg'),
-('Vertical Foregrip','Grip',       'assets/images/att_foregrip.jpg'),
-('Flashlight',       'Light',      'assets/images/att_flashlight.jpg'),
-('Laser Sight',      'Laser',      'assets/images/att_laser.jpg'),
-('Extended Magazine', 'Magazine',  'assets/images/att_extmag.jpg');
+('ACOG 4x Scope',    'Scope',      'assets/images/ACOG 4x Scope.jpg'),
+('Red Dot Sight',    'Scope',      'assets/images/Red Dot Sight.jpg'),
+('Suppressor 9mm',   'Suppressor', 'assets/images/Suppressor 9mm.jpeg'),
+('Suppressor .308',  'Suppressor', 'assets/images/Suppressor .308.jpeg'),
+('Vertical Foregrip','Grip',       'assets/images/mag412-blk_magpul_rvg_rail_vertical_grip_01.jpg'),
+('Flashlight',       'Light',      'assets/images/Flashlight.jpeg'),
+('Laser Sight',      'Laser',      'assets/images/laser-sight.jpg'),
+('Extended Magazine', 'Magazine',  'assets/images/P226 9mm 20 RD Extended Magazine.jpeg');
 
 INSERT INTO picture (img_path) VALUES
-('assets/images/glock17_1.jpg'),
-('assets/images/glock17_2.jpg'),
-('assets/images/m1911_1.jpg'),
-('assets/images/m4a1_1.jpg'),
-('assets/images/m4a1_2.jpg'),
-('assets/images/ak47_1.jpg'),
-('assets/images/ak47_2.jpg'),
-('assets/images/mp5_1.jpg'),
-('assets/images/rem870_1.jpg'),
-('assets/images/m24_1.jpg'),
-('assets/images/hk416_1.jpg'),
-('assets/images/deagle_1.jpg'),
-('assets/images/ump45_1.jpg');
+('assets/images/Glock_17.jpg'),        -- 1
+('assets/images/M1911A1.jpg'),         -- 2
+('assets/images/M4A1.png'),            -- 3
+('assets/images/AK-47.jpg'),           -- 4
+('assets/images/mp5a3.jpg'),           -- 5
+('assets/images/Remington 870.png'),   -- 6
+('assets/images/M24 SWS.jpg'),         -- 7
+('assets/images/HK416.png'),           -- 8
+('assets/images/desert-eagle.jpg'),    -- 9
+('assets/images/UMP45.jpeg');          -- 10
 
 INSERT INTO firearm (name, rate_of_fire, capacity, effective_range, barrel_length, weight, firearm_type_id) VALUES
 ('Glock 17',         NULL, 17,  50, 4.49, 0.620, 1),
@@ -216,5 +213,5 @@ INSERT INTO firearm_attachment VALUES
 
 -- FIREARM ↔ PICTURE
 INSERT INTO firearm_picture (firearm_id, picture_id) VALUES
-(1,1),(1,2),(2,3),(3,4),(3,5),(4,6),(4,7),
-(5,8),(6,9),(7,10),(8,11),(9,12),(10,13);
+(1,1),(2,2),(3,3),(4,4),(5,5),
+(6,6),(7,7),(8,8),(9,9),(10,10);

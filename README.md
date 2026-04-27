@@ -115,3 +115,11 @@ docker compose up --build -d
 ```
 
 Removing the `db_data` volume forces MySQL to re-initialise from `docker/mysql/init.sql`.
+
+---
+## รายชื่อ
+นายภูริชญ์ อำโพธิ์ศรี 6710545036
+
+นายทอตะวัน เหลืองอร่ามชัย 6710615128
+
+นายเพชรพงษ์ กันหมุด 6710615169
